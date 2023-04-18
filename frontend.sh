@@ -1,12 +1,11 @@
-[Unit]
-Description = Cart Service
-[Service]
-User=roboshop
-Environment=REDIS_HOST=redis.cskvsmi.online
-Environment=CATALOGUE_HOST=catalogue.cskvsmi.online
-Environment=CATALOGUE_PORT=8080
-ExecStart=/bin/node /app/server.js
-SyslogIdentifier=cart
+script_path=$(dirname $0)
+source ${script_path}/common.sh
 
-[Install]
-WantedBy=multi-user.target
+yum install nginx -y
+cp roboshop.conf /etc/nginx/default.d/roboshop.conf
+rm -rf /usr/share/nginx/html/*
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip
+cd /usr/share/nginx/html
+unzip /tmp/frontend.zip
+systemctl restart nginx
+systemctl enable nginx
