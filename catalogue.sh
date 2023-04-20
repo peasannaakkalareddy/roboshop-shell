@@ -26,7 +26,7 @@ echo -e "\e[36m>>>>>>>>> Install NodeJS Dependencies <<<<<<<<\e[0m"
 npm install
 
 echo -e "\e[36m>>>>>>>>> Copy Catalogue SystemD file <<<<<<<<\e[0m"
-cp$script_path/catalogue.service /etc/systemd/system/catalogue.service
+cp $script_path/catalogue.service /etc/systemd/system/catalogue.service
 
 echo -e "\e[36m>>>>>>>>> Start Catalogue Service <<<<<<<<\e[0m"
 systemctl daemon-reload
