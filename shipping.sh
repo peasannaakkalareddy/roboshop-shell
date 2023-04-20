@@ -1,9 +1,8 @@
 script=$(realpath "$0")
-script_path=$(dirname $script)
-# echo $script_path
-
+script_path=$(dirname "$script")
+source $script_path/common.sh
 # script_path=$(dirname $0)
-source ${script_path}/common.sh
+
 
 echo -e "\e[36m>>>>>>>>> Install Maven <<<<<<<<\e[0m"
 yum install maven -y
@@ -16,7 +15,7 @@ rm -rf /app
 mkdir /app
 
 echo -e "\e[36m>>>>>>>>> Download App Content <<<<<<<<\e[0m"
-curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping.zip
+curl -L -o /tmp/shipping.zip https://${app_user}-artifacts.s3.amazonaws.com/shipping.zip
 
 echo -e "\e[36m>>>>>>>>> Extract App Content <<<<<<<<\e[0m"
 cd /app
@@ -30,7 +29,7 @@ echo -e "\e[36m>>>>>>>>> Install MySQL <<<<<<<<\e[0m"
 yum install mysql -y
 
 echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<\e[0m"
-mysql -h mysql.cskvsmi.online -uroot -pRoboShop@1 < /app/schema/shipping.sql
+mysql -h mysql.cskvsmi.online -uroot -p${app_user}@1 < /app/schema/shipping.sql
 
 echo -e "\e[36m>>>>>>>>> Setup SystemD Service <<<<<<<<\e[0m"
 cp ${script_path}/shipping.service /etc/systemd/system/shipping.service

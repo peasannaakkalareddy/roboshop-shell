@@ -1,1 +1,1 @@
-app_user=roboshop
+app_user=${app_user}

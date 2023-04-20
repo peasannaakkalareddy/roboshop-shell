@@ -1,7 +1,7 @@
 [Unit]
 Description = Cart Service
 [Service]
-User=roboshop
+User=${app_user}
 Environment=REDIS_HOST=redis.cskvsmi.online
 Environment=CATALOGUE_HOST=catalogue.cskvsmi.online
 Environment=CATALOGUE_PORT=8080

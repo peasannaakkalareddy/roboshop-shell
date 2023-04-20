@@ -2,7 +2,7 @@
 Description=Shipping Service
 
 [Service]
-User=roboshop
+User=${app_user}
 Environment=CART_ENDPOINT=cart.cskvsmi.online:8080
 Environment=DB_HOST=mysql.cskvsmi.online
 ExecStart=/bin/java -jar /app/shipping.jar
