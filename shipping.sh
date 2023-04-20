@@ -1,7 +1,6 @@
 script=$(realpath "$0")
 script_path=$(dirname $script)
-echo $script_path
-exit
+# echo $script_path
 
 # script_path=$(dirname $0)
 source ${script_path}/common.sh
