@@ -17,20 +17,20 @@ rm -rf /app
 mkdir /app
 
 echo -e "\e[36m>>>>>>>>> Download App Content <<<<<<<<\e[0m"
-curl -o /tmp/component.zip https://roboshop-artifacts.s3.amazonaws.com/component.zip
+curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
 cd /app
 
 echo -e "\e[36m>>>>>>>>> Unzip App Content <<<<<<<<\e[0m"
-unzip /tmp/component.zip
+unzip /tmp/${component}.zip
 
 echo -e "\e[36m>>>>>>>>> Install NodeJS Dependencies <<<<<<<<\e[0m"
 npm install
 
-echo -e "\e[36m>>>>>>>>> Copy component SystemD file <<<<<<<<\e[0m"
-cp ${script_path}/component.service /etc/systemd/system/component.service
+echo -e "\e[36m>>>>>>>>> Copy ${component} SystemD file <<<<<<<<\e[0m"
+cp ${script_path}/${component}.service /etc/systemd/system/${component}.service
 
-echo -e "\e[36m>>>>>>>>> Start component Service <<<<<<<<\e[0m"
+echo -e "\e[36m>>>>>>>>> Start ${component} Service <<<<<<<<\e[0m"
 systemctl daemon-reload
-systemctl enable component
-systemctl restart component
+systemctl enable ${component}
+systemctl restart ${component}
 }
