@@ -17,11 +17,11 @@ yum install erlang rabbitmq-server -y &>${logfile}
 func_status_check $?
 
 echo -e "\e[36m>>>>>>>>> Start RabbitMQ Service <<<<<<<<\e[0m"
-systemctl enable rabbitmq-server ${logfile}
+systemctl enable rabbitmq-server &>${logfile}
 systemctl restart rabbitmq-server &>${logfile}
 func_status_check $?
 
 echo -e "\e[36m>>>>>>>>> Add Application User in RabbtiMQ <<<<<<<<\e[0m"
-rabbitmqctl add_user ${app_user} ${app_user}123 ${logfile}
+rabbitmqctl add_user ${app_user} ${app_user}123 &>${logfile}
 rabbitmqctl set_permissions -p / ${app_user} ".*" ".*" ".*" &>${logfile}
 func_status_check $?
