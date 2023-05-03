@@ -9,7 +9,7 @@ func_schema(){
   yum install mongodb-org-shell -y
 
   echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<\e[0m"
-  mongo --host mongodb-dev.cskvsmi.online </app/schema/catalogue.js
+  mongo --host mongodb-dev.cskvsmi.online </app/schema/${component}.js
 
 }
 func_nodejs(){
