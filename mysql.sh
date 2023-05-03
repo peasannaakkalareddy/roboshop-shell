@@ -15,7 +15,7 @@ yum install mysql-community-server -y &>${logfile}
 func_status_check $?
 
 echo -e "\e[36m>>>>>>>>> Start MySQL <<<<<<<<\e[0m"
-systemctl enable mysqld
+systemctl enable mysqld &>${logfile}
 systemctl restart mysqld &>${logfile}
 func_status_check $?
 
