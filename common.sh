@@ -48,7 +48,12 @@ func_app_prereq(){
 
   func_print_head " Add Application User "
 
-  useradd ${app_user}
+  id ${app_user} &>${logfile}
+
+  if [ $? -ne 0 ]; then
+    useradd ${app_user}  &>${logfile}
+  fi
+
   func_status_check $?
 
   func_print_head " Create Application Directory "
