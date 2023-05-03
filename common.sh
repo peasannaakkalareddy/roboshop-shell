@@ -2,7 +2,7 @@ app_user=roboshop
 #script=$(realpath "$0")
 #script_path=$(dirname "$script")
 func_schema(){
-  if [ "$schema_setup" == "mongo"]; then
+  if [ "$schema_setup" == "mongo" ]; then
   echo -e "\e[36m>>>>>>>>> Copy MongoDB repo <<<<<<<<\e[0m"
   cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
 
@@ -13,7 +13,7 @@ func_schema(){
   mongo --host mongodb-dev.cskvsmi.online </app/schema/${component}.js
 fi
 }
-if [ "$schema_setup" == "mysql"]; then
+if [ "$schema_setup" == "mysql" ]; then
 
 echo -e "\e[36m>>>>>>>>> Install MySQL <<<<<<<<\e[0m"
 yum install mysql -y
