@@ -12,7 +12,8 @@ func_schema(){
   echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<\e[0m"
   mongo --host mongodb-dev.cskvsmi.online </app/schema/${component}.js
 fi
-}
+
+
 if [ "$schema_setup" == "mysql" ]; then
 
 echo -e "\e[36m>>>>>>>>> Install MySQL <<<<<<<<\e[0m"
@@ -21,6 +22,8 @@ yum install mysql -y
 echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<\e[0m"
 mysql -h mysql-dev.cskvsmi.online -uroot -p${mysql_root_password}< /app/schema/${component}.sql
 fi
+
+}
 func_app_prereq(){
   echo -e "\e[36m>>>>>>>>> Add Application User <<<<<<<<\e[0m"
   useradd ${app_user}
