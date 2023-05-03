@@ -2,24 +2,23 @@ script=$(realpath "$0")
 script_path=$(dirname "$script")
 source ${script_path}/common.sh
 
-  echo -e "\e[35m>>>>>> Install nginx <<<<<<<<<<\e[0m"
-
-yum install nginx -y &>${logfile}
-func_status_check $?
-echo -e "\e[35m>>>>>> copying conf file <<<<<<<<<<\e[0m"
-cp roboshop.conf /etc/nginx/default.d/roboshop.conf &>${logfile}
-func_status_check $?
-echo -e "\e[35m>>>>>> removing default temp <<<<<<<<<<\e[0m"
-rm -rf /usr/share/nginx/html/* &>${logfile}
-func_status_check $?
-echo -e "\e[35m>>>>>> downloading app packages <<<<<<<<<<\e[0m"
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>${logfile}
-func_status_check $?
-cd /usr/share/nginx/html
-unzip /tmp/frontend.zip &>${logfile}
-echo -e "\e[35m>>>>>> restart nginx <<<<<<<<<<\e[0m"
-systemctl restart nginx &>${logfile}
-func_status_check $?
-echo -e "\e[35m>>>>>> enable nginx <<<<<<<<<<\e[0m"
-systemctl enable nginx &>${logfile}
-func_status_check $?
+func_print_head " Install Nginx server "
+yum install nginx -y &>>$log_file
+func_stat_check $?
+func_print_head " Copy roboshop configuration file "
+cp ${script_path}/roboshop.conf /etc/nginx/default.d/roboshop.conf &>>$log_file
+func_stat_check $?
+func_print_head " Remove old app content "
+rm -rf /usr/share/nginx/html/* &>>$log_file
+func_stat_check $?
+func_print_head "  Download App Content "
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>$log_file
+func_stat_check $?
+cd /usr/share/nginx/html &>>$log_file
+func_print_head " Unzip App Content "
+unzip /tmp/frontend.zip &>>$log_file
+func_stat_check $?
+func_print_head " Start nginx Service "
+systemctl restart nginx &>>$log_file
+systemctl enable nginx &>>$log_file
+func_stat_check $?
