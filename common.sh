@@ -33,7 +33,7 @@ func_app_prereq(){
 
   func_print_head " Add Application User "
 
-  useradd ${app_user} &>${logfile}
+  useradd ${app_user}
 
   func_print_head " Create Application Directory "
   rm -rf /app &>${logfile}
