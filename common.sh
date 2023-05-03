@@ -71,7 +71,7 @@ func_java(){
   echo -e "\e[36m>>>>>>>>> Download Maven Dependencies <<<<<<<<\e[0m"
   mvn clean package
   mv target/shipping-1.0.jar shipping.jar
-  schema_setup
+  func_schema
   func_systemd
 }
 
