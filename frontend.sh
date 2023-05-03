@@ -16,7 +16,7 @@ echo -e "\e[35m>>>>>> downloading app packages <<<<<<<<<<\e[0m"
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>${logfile}
 func_status_check $?
 cd /usr/share/nginx/html
-unzip /tmp/frontend.zip
+unzip /tmp/frontend.zip &>${logfile}
 echo -e "\e[35m>>>>>> restart nginx <<<<<<<<<<\e[0m"
 systemctl restart nginx &>${logfile}
 func_status_check $?
