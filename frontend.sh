@@ -3,7 +3,7 @@ script_path=$(dirname "$script")
 source ${script_path}/common.sh
 
 func_print_head " Install Nginx server "
-yum install nginx -y &>>$log_file
+yum install nginx -y &>>${log_file}
 func_status_check $?
 func_print_head " Copy roboshop configuration file "
 cp ${script_path}/roboshop.conf /etc/nginx/default.d/roboshop.conf &>>$log_file
