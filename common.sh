@@ -57,6 +57,7 @@ func_app_prereq
 
 echo -e "\e[36m>>>>>>>>> Install NodeJS Dependencies <<<<<<<<\e[0m"
 npm install
+func_schema
 
 
 }
