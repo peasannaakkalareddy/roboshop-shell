@@ -6,7 +6,7 @@ echo -e "\e[36m>>>>>>>>> Install Redis Repos <<<<<<<<\e[0m"
 yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>${logfile}
 func_status_check $?
 echo -e "\e[36m>>>>>>>>> Install Redis <<<<<<<<\e[0m"
-dnf module enable redis:remi-6.2 -y
+dnf module enable redis:remi-6.2 -y &>${logfile}
 yum install redis -y &>${logfile}
 func_status_check $?
 
