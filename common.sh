@@ -1,92 +1,102 @@
 app_user=roboshop
 #script=$(realpath "$0")
 #script_path=$(dirname "$script")
+logfile=/roboshop/log
+func_print_head(){
+  echo -e "\e[35m>>>>>>$1<<<<<<<<<<\e[0m"
+}
 func_schema(){
   if [ "$schema_setup" == "mongo" ]; then
-  echo -e "\e[36m>>>>>>>>> Copy MongoDB repo <<<<<<<<\e[0m"
-  cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
 
-  echo -e "\e[36m>>>>>>>>> Install MongoDB Client <<<<<<<<\e[0m"
-  yum install mongodb-org-shell -y
+  func_print_head " Copy MongoDB repo "
+  cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo &>${logfile}
 
-  echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<\e[0m"
-  mongo --host mongodb-dev.cskvsmi.online </app/schema/${component}.js
+  func_print_head " Install MongoDB Client "
+  yum install mongodb-org-shell -y &>${logfile}
+
+  func_print_head " Load Schema "
+  mongo --host mongodb-dev.cskvsmi.online </app/schema/${component}.js &>${logfile}
 fi
 
 
 if [ "$schema_setup" == "mysql" ]; then
 
-echo -e "\e[36m>>>>>>>>> Install MySQL <<<<<<<<\e[0m"
-yum install mysql -y
+func_print_head " Install MySQL "
+yum install mysql -y &>${logfile}
 
-echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<\e[0m"
-mysql -h mysql-dev.cskvsmi.online -uroot -p${mysql_root_password}< /app/schema/${component}.sql
+func_print_head " Load Schema "
+mysql -h mysql-dev.cskvsmi.online -uroot -p${mysql_root_password}< /app/schema/${component}.sql &>${logfile}
 fi
 
 }
 func_app_prereq(){
-  echo -e "\e[36m>>>>>>>>> Add Application User <<<<<<<<\e[0m"
-  useradd ${app_user}
 
-  echo -e "\e[36m>>>>>>>>> Create Application Directory <<<<<<<<\e[0m"
-  rm -rf /app
-  mkdir /app
+  func_print_head " Add Application User "
 
-  echo -e "\e[36m>>>>>>>>> Download App Content <<<<<<<<\e[0m"
-  curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
-  cd /app
+  useradd ${app_user} &>${logfile}
 
-  echo -e "\e[36m>>>>>>>>> Unzip App Content <<<<<<<<\e[0m"
-  unzip /tmp/${component}.zip
+  func_print_head " Create Application Directory "
+  rm -rf /app &>${logfile}
+  mkdir /app &>${logfile}
+
+    func_print_head " Download App Content "
+  curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>${logfile}
+  cd /app &>${logfile}
+
+  func_print_head " Unzip App Content "
+  unzip /tmp/${component}.zip &>${logfile}
 }
 func_systemd(){
-  echo -e "\e[36m>>>>>>>>> Copy ${component} SystemD file <<<<<<<<\e[0m"
-  cp ${script_path}/${component}.service /etc/systemd/system/${component}.service
+   func_print_head " Copy ${component} SystemD file "
+  cp ${script_path}/${component}.service /etc/systemd/system/${component}.service &>${logfile}
 
-  echo -e "\e[36m>>>>>>>>> Start ${component} Service <<<<<<<<\e[0m"
-  systemctl daemon-reload
-  systemctl enable ${component}
-  systemctl restart ${component}
+  func_print_head " Start ${component} Service "
+
+  systemctl daemon-reload &>${logfile}
+  systemctl enable ${component} &>${logfile}
+  systemctl restart ${component} &>${logfile}
 }
 func_nodejs(){
 
-echo -e "\e[36m>>>>>>>>> Configuring NodeJS repos <<<<<<<<\e[0m"
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash
+  func_print_head " Configuring NodeJS repos "
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>${logfile}
 
-echo -e "\e[36m>>>>>>>>> Install NodeJS <<<<<<<<\e[0m"
-yum install nodejs -y
+func_print_head " Install NodeJS "
+yum install nodejs -y &>${logfile}
 
 func_app_prereq
-
-echo -e "\e[36m>>>>>>>>> Install NodeJS Dependencies <<<<<<<<\e[0m"
-npm install
+func_print_head " Install NodeJS Dependencies "
+npm install &>${logfile}
 func_schema
 
 
 }
 
 func_java(){
-  echo -e "\e[36m>>>>>>>>> Install Maven <<<<<<<<\e[0m"
-  yum install maven -y
+  func_print_head " Install Maven "
+  yum install maven -y &>${logfile}
 
   func_app_prereq
+    func_print_head " Download Maven Dependencies "
 
-  echo -e "\e[36m>>>>>>>>> Download Maven Dependencies <<<<<<<<\e[0m"
-  mvn clean package
-  mv target/shipping-1.0.jar shipping.jar
+  mvn clean package &>${logfile}
+  mv target/shipping-1.0.jar shipping.jar &>${logfile}
   func_schema
   func_systemd
 }
 
 func_python() {
-  echo -e "\e[36m>>>>>>>>> Install Python <<<<<<<<\e[0m"
-  yum install python36 gcc python3-devel -y
+
+      func_print_head " Install Python "
+
+  yum install python36 gcc python3-devel -y &>${logfile}
 
   func_app_prereq
 
-  echo -e "\e[36m>>>>>>>>> Install Dependencies <<<<<<<<\e[0m"
+        func_print_head " Install Dependencies "
 
-  pip3.6 install -r requirements.txt
+
+  pip3.6 install -r requirements.txt &>${logfile}
   sed -i -e "s|rabbitmq_appuser_password|${rabbitmq_appuser_password}|" ${script_path}/payment.service
   func_systemd
 }
