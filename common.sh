@@ -19,7 +19,7 @@ echo -e "\e[36m>>>>>>>>> Install MySQL <<<<<<<<\e[0m"
 yum install mysql -y
 
 echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<\e[0m"
-mysql -h mysql-dev.cskvsmi.online -uroot -p${app_user}@1 < /app/schema/shipping.sql
+mysql -h mysql-dev.cskvsmi.online -uroot -p${app_user}@1 < /app/schema/component.sql
 fi
 func_app_prereq(){
   echo -e "\e[36m>>>>>>>>> Add Application User <<<<<<<<\e[0m"
