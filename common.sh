@@ -1,6 +1,17 @@
 app_user=roboshop
 #script=$(realpath "$0")
 #script_path=$(dirname "$script")
+func_schema(){
+  echo -e "\e[36m>>>>>>>>> Copy MongoDB repo <<<<<<<<\e[0m"
+  cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
+
+  echo -e "\e[36m>>>>>>>>> Install MongoDB Client <<<<<<<<\e[0m"
+  yum install mongodb-org-shell -y
+
+  echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<\e[0m"
+  mongo --host mongodb-dev.cskvsmi.online </app/schema/catalogue.js
+
+}
 func_nodejs(){
 
 echo -e "\e[36m>>>>>>>>> Configuring NodeJS repos <<<<<<<<\e[0m"
