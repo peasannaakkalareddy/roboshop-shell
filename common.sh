@@ -1,7 +1,7 @@
 app_user=roboshop
 #script=$(realpath "$0")
 #script_path=$(dirname "$script")
-logfile=/roboshop/log
+logfile=/tmp/roboshop.log
 func_print_head(){
   echo -e "\e[35m>>>>>>$1<<<<<<<<<<\e[0m"
 }
