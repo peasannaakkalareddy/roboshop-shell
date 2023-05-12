@@ -99,6 +99,7 @@ func_app_prereq
 func_print_head " Install NodeJS Dependencies "
 npm install &>${logfile}
 func_status_check $?
+func_systemd
 func_schema
 
 
