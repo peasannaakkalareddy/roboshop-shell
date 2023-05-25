@@ -1,7 +1,7 @@
 [Unit]
 Description = User Service
 [Service]
-User=${app_user}
+User=roboshop
 Environment=MONGO=true
 Environment=REDIS_HOST=redis-dev.cskvsmi.online
 Environment=MONGO_URL="mongodb://mongodb-dev.cskvsmi.online:27017/users"

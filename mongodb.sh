@@ -3,7 +3,7 @@ script_path=$(dirname "$script")
 source ${script_path}/common.sh
 
 echo -e "\e[35m>>>>>> copying repos <<<<<<<<<<\e[0m"
-cp mongo.repo /etc/yum.repos.d/mongo.repo &>${logfile}
+cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo &>${logfile}
 func_status_check $?
 echo -e "\e[35m>>>>>> install  mongodb-org <<<<<<<<<<\e[0m"
 yum install mongodb-org -y &>${logfile}
