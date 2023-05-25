@@ -123,7 +123,7 @@ func_java(){
 
 func_python() {
 
-      func_print_head " Install Python "
+ func_print_head " Install Python "
 
   yum install python36 gcc python3-devel -y &>${logfile}
   func_status_check $?
