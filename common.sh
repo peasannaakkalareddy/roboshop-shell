@@ -1,6 +1,6 @@
 app_user=roboshop
-#script=$(realpath "$0")
-#script_path=$(dirname "$script")
+script=$(realpath "$0")
+script_path=$(dirname "$script")
 logfile=/tmp/roboshop.log
 
 func_print_head(){
@@ -99,8 +99,9 @@ func_app_prereq
 func_print_head " Install NodeJS Dependencies "
 npm install &>${logfile}
 func_status_check $?
-func_systemd
 func_schema
+func_systemd
+
 
 
 }
@@ -115,7 +116,7 @@ func_java(){
 
   mvn clean package &>${logfile}
   func_status_check $?
-  mv target/shipping-1.0.jar shipping.jar &>${logfile}
+  mv target/${component}-1.0.jar ${component}.jar &>${logfile}
   func_status_check $?
   func_schema
   func_systemd
