@@ -1,28 +1,23 @@
 script=$(realpath "$0")
 script_path=$(dirname "$script")
-source $script_path/common.sh
+source ${script_path}/common.sh
 mysql_root_password=$1
 if [ -z "$mysql_root_password" ]; then
   echo Input mysql root password missing
-  exit 1
+ exit 1
 fi
-echo -e "\e[36m>>>>>>>>> Disable MySQL 8 Version <<<<<<<<\e[0m"
-dnf module disable mysql -y &>${logfile}
+echo -e " our application needs MySQL 5.7. So lets disable MySQL 8 version"
+dnf module disable mysql -y &>>$log_file
 func_status_check $?
-
-echo -e "\e[36m>>>>>>>>> Copy MySQL Repo File <<<<<<<<\e[0m"
-cp ${script_path}/mysql.repo /etc/yum.repos.d/mysql.repo &>${logfile}
+echo -e "Copy mysql repos file "
+cp ${script_path}/mysql.repo /etc/yum.repos.d/mysql.repo &>>$log_file
 func_status_check $?
-
-echo -e "\e[36m>>>>>>>>> Install MySQL <<<<<<<<\e[0m"
-yum install mysql-community-server -y &>${logfile}
+echo -e "Install mysql "
+yum install mysql-community-server -y &>>$log_file
 func_status_check $?
-
-echo -e "\e[36m>>>>>>>>> Start MySQL <<<<<<<<\e[0m"
-systemctl enable mysqld &>${logfile}
-systemctl restart mysqld &>${logfile}
+echo -e "Start mysql services  "
+systemctl enable mysqld &>>$log_file
+systemctl start mysqld &>>$log_file
 func_status_check $?
-
-echo -e "\e[36m>>>>>>>>> Reset MySQL Password <<<<<<<<\e[0m"
-mysql_secure_installation --set-root-pass $mysql_root_password &>${logfile}
+mysql_secure_installation --set-root-pass $mysql_root_password &>>$log_file
 func_status_check $?
