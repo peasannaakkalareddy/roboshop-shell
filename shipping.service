@@ -3,8 +3,8 @@ Description=Shipping Service
 
 [Service]
 User=roboshop
-Environment=CART_ENDPOINT=cart-dev.cskvsmi.online:8080
-Environment=DB_HOST=mysql-dev.cskvsmi.online
+Environment=CART_ENDPOINT=cart-dev.panda4u.online:8080
+Environment=DB_HOST=mysql-dev.panda4u.online
 ExecStart=/bin/java -jar /app/shipping.jar
 SyslogIdentifier=shipping
 

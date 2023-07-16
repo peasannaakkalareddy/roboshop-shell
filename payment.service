@@ -4,11 +4,11 @@ Description=Payment Service
 [Service]
 User=root
 WorkingDirectory=/app
-Environment=CART_HOST=cart-dev.cskvsmi.online
+Environment=CART_HOST=cart-dev.panda4u.online
 Environment=CART_PORT=8080
-Environment=USER_HOST=user-dev.cskvsmi.online
+Environment=USER_HOST=user-dev.panda4u.online
 Environment=USER_PORT=8080
-Environment=AMQP_HOST=rabbitmq-dev.cskvsmi.online
+Environment=AMQP_HOST=rabbitmq-dev.panda4u.online
 Environment=AMQP_USER=roboshop
 Environment=AMQP_PASS=rabbitmq_appuser_password
 

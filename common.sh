@@ -27,7 +27,7 @@ func_schema(){
   func_status_check $?
 
   func_print_head " Load Schema "
-  mongo --host mongodb-dev.cskvsmi.online </app/schema/${component}.js &>${logfile}
+  mongo --host mongodb-dev.panda4u.online </app/schema/${component}.js &>${logfile}
   func_status_check $?
 fi
 
@@ -39,7 +39,7 @@ yum install mysql -y &>${logfile}
 func_status_check $?
 
 func_print_head " Load Schema "
-mysql -h mysql-dev.cskvsmi.online -uroot -p${mysql_root_password}< /app/schema/${component}.sql &>${logfile}
+mysql -h mysql-dev.panda4u.online -uroot -p${mysql_root_password}< /app/schema/${component}.sql &>${logfile}
 func_status_check $?
 fi
 
